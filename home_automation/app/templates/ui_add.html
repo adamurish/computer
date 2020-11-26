@@ -1,0 +1,12 @@
+{% extends 'ui_base.html' %}
+{% block header %} Add {{ type }} {% endblock %}
+{% block body %}
+<form method="post">
+    {% for input in inputs %}
+        <label for="{{ input[0] }}"> {{ input[2] }} </label>
+        <input name="{{ input[0] }}" id="{{ input[0] }}" type="{{ input[1] }}" required>
+        <br>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}
