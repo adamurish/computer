@@ -1,9 +1,24 @@
 {% extends 'ui_base.html' %}
-{% block header %} Available actions: {% endblock %}
+{% block header %} PAAPAS Home {% endblock %}
 {% block body %}
+<h2> Available actions: </h2>
 <ul>
 {% for option in options %}
     <li> <a href="{{ url_for('ui.add', add_type=option) }}"> Add {{ option }} </a> </li>
+{% endfor %}
+</ul>
+
+<h2> Current Reminders: </h2>
+<ul>
+{% for reminder in reminders %}
+    <li> {% for field in options['reminder'] %} {{ reminder['labels'][field] }} : {{ reminder[field] }} <br> {% endfor %}</li>
+{% endfor %}
+</ul>
+
+<h2> Current Todos: </h2>
+<ul>
+{% for todo in todos %}
+    <li> {% for field in options['todo'] %} {{ todo['labels'][field] }} : {{ todo[field] }} <br> {% endfor %}</li>
 {% endfor %}
 </ul>
 {% endblock %}

@@ -21,9 +21,21 @@ def add_to_db(collection, content):
     db.get_collection(collection).insert_one(content)
 
 
+def get_from_db(collection, filter=None):
+    db = get_db().get_database('home_automation')
+    ret = []
+    for entry in db.get_collection(collection).find(filter):
+        entry['labels'] = {}
+        for field in options[collection]:
+            entry['labels'][field] = str.capitalize(field)
+        ret.append(entry)
+    return ret
+
+
 @bp_ui.route('/')
 def home():
-    return render_template('ui_home.html', options=options)
+    print(get_from_db('reminder'))
+    return render_template('ui_home.html', options=options, reminders=get_from_db('reminder'), todos=get_from_db('todo'))
 
 
 @bp_ui.route('/add/<add_type>', methods=('GET', 'POST'))
