@@ -1,4 +1,4 @@
-# python automation and personal assistant server
+# python automation and personal assistant server (PAAPAS)
 ## ui
 ### /add/<add_type>
 add_type is one of: 'alarm', 'reminder', 'todo'  

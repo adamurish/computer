@@ -1,5 +1,6 @@
 import pymongo
 from flask import g
+from paapas.pa import options
 
 
 def get_db():
