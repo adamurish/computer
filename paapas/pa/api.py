@@ -7,7 +7,7 @@ bp_api = Blueprint('api', __name__, url_prefix='/api')
 
 def check_request():
     status = {
-        'success': True
+        'success': True,
     }
     if not request.is_json:
         status['success'] = False
@@ -44,5 +44,7 @@ def api_get():
     status = check_request()
     if not status['success']:
         return status
-    status['content'] = get_from_db(request.json['type'])
+    status['content'] = []
+    for item in get_from_db(request.json['type']):
+        status['content'].append(item)
     return status
