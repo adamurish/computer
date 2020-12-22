@@ -5,7 +5,7 @@ from paapas.pa import options
 
 def get_db():
     if 'db' not in g:
-        g.db = pymongo.MongoClient('mongodb://localhost:27017')
+        g.db = pymongo.MongoClient('mongodb://mongo-container:27017')
     return g.db
 
 
