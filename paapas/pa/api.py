@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, abort, url_for
 from paapas.pa.pa_db import add_to_db, get_from_db_raw
 from paapas.pa import options
 from bson import json_util
+from flask.json import jsonify
 
 bp_api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -43,6 +44,7 @@ def api_add():
 
     The item to add should be something from the 'options' dict.
     It will be added to the collection matching the 'type' attribute in the request.
+    The request should supply all the inputs for the specified type, see 'options' and 'input_types'.
 
     :return: status dict, see 'check_request()' for more info
     """
@@ -58,7 +60,7 @@ def api_add():
             return status
         content[option] = request.json[option]
     add_to_db(request.json['type'], content)
-    return status
+    return jsonify(status)
 
 
 @bp_api.route('/get', methods=('POST',))
@@ -79,4 +81,4 @@ def api_get():
     if not status['success']:
         return status
     status['content'] = json.loads(json_util.dumps(get_from_db_raw(request.json['type'])))
-    return status
+    return jsonify(status)

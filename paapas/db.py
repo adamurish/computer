@@ -1,11 +1,13 @@
 import pymongo
-from flask import g
+from flask import g, current_app
 
 
 def get_db():
-
+    mongo_url = 'mongodb://mongo-container:27017'
+    if current_app.env == 'development':
+        mongo_url = 'mongodb://localhost:27017'
     if 'db' not in g:
-        g.db = pymongo.MongoClient('mongodb://mongo-container:27017')
+        g.db = pymongo.MongoClient(mongo_url)
     return g.db
 
 
