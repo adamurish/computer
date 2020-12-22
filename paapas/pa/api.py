@@ -46,5 +46,7 @@ def api_get():
         return status
     status['content'] = []
     for item in get_from_db(request.json['type']):
-        status['content'].append(item)
+        print(item)
+        if item['_id'] is not None:
+            status['content'].append(item)
     return status
