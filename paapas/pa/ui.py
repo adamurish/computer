@@ -8,7 +8,10 @@ bp_ui = Blueprint('ui', __name__, url_prefix='/ui')
 
 @bp_ui.route('/')
 def home():
-    return render_template('pa/ui_home.html', options = options, reminders = get_from_db('reminder'), todos = get_from_db('todo'))
+    return render_template('pa/ui_home.html',
+                           options=options,
+                           reminders=get_from_db('reminder'),
+                           todos=get_from_db('todo'))
 
 
 @bp_ui.route('/add/<add_type>', methods=('GET', 'POST'))
