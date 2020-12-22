@@ -16,7 +16,8 @@ def home():
     return render_template('pa/ui_home.html',
                            options=options,
                            reminders=get_from_db('reminder'),
-                           todos=get_from_db('todo'))
+                           todos=get_from_db('todo'),
+                           micro=get_from_db('micro-habit'))
 
 
 @bp_ui.route('/add/<add_type>', methods=('GET', 'POST'))

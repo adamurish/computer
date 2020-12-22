@@ -21,4 +21,11 @@
     <li> {% for field in options['todo'] %} {{ todo['labels'][field] }} : {{ todo[field] }} <br> {% endfor %}</li>
 {% endfor %}
 </ul>
+
+<h2> Micro Habits: </h2>
+<ul>
+{% for habit in micro %}
+    <li> {% for field in options['micro-habit'] %} {{ habit[field] }} <br> {% endfor %}</li>
+{% endfor %}
+</ul>
 {% endblock %}
