@@ -39,7 +39,7 @@ def api_add():
     return status
 
 
-@bp_api.route('/get')
+@bp_api.route('/get', methods=('POST',))
 def api_get():
     status = check_request()
     if not status['success']:
