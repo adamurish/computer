@@ -1,6 +1,8 @@
+import json
 from flask import Blueprint, render_template, request, redirect, abort, url_for
-from paapas.pa.pa_db import add_to_db, get_from_db
+from paapas.pa.pa_db import add_to_db, get_from_db_raw
 from paapas.pa import options
+from bson import json_util
 
 bp_api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -44,9 +46,5 @@ def api_get():
     status = check_request()
     if not status['success']:
         return status
-    status['content'] = []
-    for item in get_from_db(request.json['type']):
-        print(item)
-        if item['_id'] is not None:
-            status['content'].append(item)
+    status['content'] = json.loads(json_util.dumps(get_from_db_raw(request.json['type'])))
     return status
