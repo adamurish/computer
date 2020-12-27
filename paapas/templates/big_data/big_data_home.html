@@ -1,0 +1,12 @@
+{% extends 'ui_base.html' %}
+{% block header %} PAAPAS "Big Data" Home {% endblock %}
+{% block body %}
+    {% for type in datatypes %}
+        <h1> {{ type.capitalize() }} </h1>
+        <ul>
+        {% for data in datadict[type] %}
+            <li> {{ data['datetime'].ctime() }} <br> {{ data['data'] }} </li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

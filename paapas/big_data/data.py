@@ -1,7 +1,8 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, render_template
 from paapas import db
 from paapas.big_data import data_types
 from datetime import datetime
+import pymongo
 
 bp_data = Blueprint('data', __name__, url_prefix='/data')
 
@@ -35,3 +36,14 @@ def post():
             inserted += 1
     status['inserted'] = inserted
     return status
+
+
+@bp_data.route('/')
+def home():
+    database = db.get_db().get_database('big_data')
+    data_dict = {}
+    for data_type in data_types:
+        data_dict[data_type] = []
+        for item in database.get_collection(data_type).find().sort('datetime', pymongo.DESCENDING):
+            data_dict[data_type].append(item)
+    return render_template('big_data/big_data_home.html', datatypes=data_types, datadict=data_dict)
