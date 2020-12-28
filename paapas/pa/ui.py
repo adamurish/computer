@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, abort, url_for
-from paapas.pa.pa_db import get_from_db, add_to_db
+from paapas.pa.pa_db import get_from_db, add_to_db, remove_from_db
 from paapas.pa import options, input_types
+from pymongo import DESCENDING, ASCENDING
 
 bp_ui = Blueprint('ui', __name__, url_prefix='/ui')
 
@@ -15,8 +16,8 @@ def home():
 
     return render_template('pa/ui_home.html',
                            options=options,
-                           reminders=get_from_db('reminder'),
-                           todos=get_from_db('todo'),
+                           reminders=get_from_db('reminder', sort_key=[('date', ASCENDING)]),
+                           todos=get_from_db('todo', sort_key=[('date', ASCENDING), ('priority', DESCENDING)]),
                            micro=get_from_db('micro-habit'))
 
 
@@ -44,3 +45,9 @@ def add(add_type):
     for i in range(len(options[add_type])):
         inputs.append((options[add_type][i], input_types[add_type][i], str.capitalize(options[add_type][i])))
     return render_template('pa/ui_add.html', type=str.capitalize(add_type), inputs=inputs)
+
+
+@bp_ui.route('/remove/<item_type>/<item_id>')
+def remove(item_type, item_id):
+    remove_from_db(item_type, item_id)
+    return redirect(url_for('ui.home'))

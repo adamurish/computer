@@ -1,4 +1,5 @@
 from paapas.db import get_db
+from bson.objectid import ObjectId
 from paapas.pa import options
 
 
@@ -14,20 +15,28 @@ def add_to_db(collection, content):
     db.get_collection(collection).insert_one(content)
 
 
-def get_from_db(collection, filter=None):
+def remove_from_db(collection, item_id):
+    db = get_db().get_database('home_automation')
+    db.get_collection(collection).delete_one({'_id': ObjectId(item_id)})
+
+
+def get_from_db(collection, filter=None, sort_key=None, sort_dir=None):
     """
-    Get all items in a certain collection in the database, with labels
+    Get all items in a certain collection in the database, packaged in a nice list
 
     :param collection: the collection to pull from
     :param filter: the filter to use, default None
-    :return: filtered list of items in collection, with added labels for html template usage
+    :return: filtered list of items in collection
     """
 
     ret = []
-    for entry in get_from_db_raw(collection, filter):
-        entry['labels'] = {}
-        for field in options[collection]:
-            entry['labels'][field] = str.capitalize(field)
+    curs = get_from_db_raw(collection, filter)
+    if sort_key is not None:
+        curs = curs.sort(sort_key, sort_dir)
+    for entry in curs:
+        # entry['labels'] = {}
+        # for field in options[collection]:
+        #     entry['labels'][field] = str.capitalize(field)
         ret.append(entry)
     return ret
 

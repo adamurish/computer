@@ -12,14 +12,18 @@
 <h2> Current Reminders: </h2>
 <ul>
 {% for reminder in reminders %}
-    <li> {% for field in options['reminder'] %} {{ reminder['labels'][field] }} : {{ reminder[field] }} <br> {% endfor %}</li>
+    <li> {% for field in options['reminder'] %} {{ field.capitalize() }}: {{ reminder[field] }} <br> {% endfor %}
+        <a href="{{ url_for('ui.remove', item_type='reminder',item_id=reminder['_id']) }}"> Remove </a>
+    </li>
 {% endfor %}
 </ul>
 
 <h2> Current Todos: </h2>
 <ul>
 {% for todo in todos %}
-    <li> {% for field in options['todo'] %} {{ todo['labels'][field] }} : {{ todo[field] }} <br> {% endfor %}</li>
+    <li> {% for field in options['todo'] %} {{ field.capitalize() }}: {{ todo[field] }} <br> {% endfor %}
+        <a href="{{ url_for('ui.remove', item_type='todo',item_id=todo['_id']) }}"> Remove </a>
+    </li>
 {% endfor %}
 </ul>
 

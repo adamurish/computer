@@ -40,6 +40,14 @@ def post():
 
 @bp_data.route('/')
 def home():
+    """
+    Simple data browser route
+
+    Renders a template that formats all the data into a nice list, using the user's timezone.
+    It's only the user's timezone as long as they live in CST.
+
+    :return: Rendered template
+    """
     database = db.get_db().get_database('big_data')
     data_dict = {}
     for data_type in data_types:

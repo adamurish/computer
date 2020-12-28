@@ -11,7 +11,7 @@ options = {
 # type of input each field of each item is
 input_types = {
     'alarm': ['date', 'time'],
-    'micro-habit' : ['text'],
+    'micro-habit': ['text'],
     'reminder': ['date', 'time', 'text'],
     'todo': ['date', 'time', 'text', 'number'],
 }
