@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template
 from paapas import db
 from paapas.big_data import data_types
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import pymongo
 
 bp_data = Blueprint('data', __name__, url_prefix='/data')
@@ -29,7 +29,7 @@ def post():
     for data_type in data_types:
         if data_type in request.json:
             ins = {
-                'datetime': datetime.now(),
+                'datetime': datetime.now(timezone(timedelta(hours=-6))),
                 'data': request.json[data_type]
             }
             database.get_collection(data_type).insert_one(ins)
