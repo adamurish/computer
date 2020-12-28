@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template
 from paapas import db
 from paapas.big_data import data_types
-from datetime import datetime
+from datetime import datetime, timezone
 import pymongo
 
 bp_data = Blueprint('data', __name__, url_prefix='/data')

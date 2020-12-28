@@ -5,7 +5,7 @@
         <h1> {{ type.capitalize() }} </h1>
         <ul>
         {% for data in datadict[type] %}
-            <li> {{ data['datetime'].ctime() }} <br> {{ data['data'] }} </li>
+            <li> {{ data['datetime'].astimezone().ctime() }} <br> {{ data['data'] }} </li>
         {% endfor %}
         </ul>
     {% endfor %}
