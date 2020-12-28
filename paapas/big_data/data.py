@@ -29,7 +29,7 @@ def post():
     for data_type in data_types:
         if data_type in request.json:
             ins = {
-                'datetime': datetime.now(timezone(timedelta(hours=-6))),
+                'datetime': datetime.now(),
                 'data': request.json[data_type]
             }
             database.get_collection(data_type).insert_one(ins)
@@ -46,4 +46,5 @@ def home():
         data_dict[data_type] = []
         for item in database.get_collection(data_type).find().sort('datetime', pymongo.DESCENDING):
             data_dict[data_type].append(item)
-    return render_template('big_data/big_data_home.html', datatypes=data_types, datadict=data_dict)
+    return render_template('big_data/big_data_home.html', datatypes=data_types, datadict=data_dict,
+                           user_timezone=timezone(timedelta(hours=-6)))
